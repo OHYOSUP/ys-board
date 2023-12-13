@@ -3,19 +3,7 @@ import { useForm } from "react-hook-form";
 import { boardState } from "../atom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-
-const TodoBoardGridContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-`;
-
-const TodoBoard = styled.div`
-  margin: 20px;
-  width: 300px;
-  height: 400px;
-  background-color: #777;
-`;
+import TodoBoard from "./TodoBoard";
 
 function Board() {
   const { register, handleSubmit, resetField } = useForm();
@@ -27,16 +15,17 @@ function Board() {
     const newTodoBoard = {
       id: Date.now().toString(),
       todoBoardTitle: data.todoBoard,
+      todos: [],
     };
-    setBoards((prevBoards) => {        
-        return prevBoards.map((board) =>
-          board.boardName === boardName
-            ? { ...board, todoBoard: [...board.todoBoard, newTodoBoard] }
-            : board
-        );
-      });
+    setBoards((prevBoards) => {
+      return prevBoards.map((board) =>
+        board.boardName === boardName
+          ? { ...board, todoBoard: [...board.todoBoard, newTodoBoard] }
+          : board
+      );
+    });
     resetField("todoBoard");
-    console.log(boards)
+    console.log(boards, data);
   };
 
   return (
@@ -46,11 +35,9 @@ function Board() {
         <input {...register("todoBoard")} />
         <button type="submit">Enter</button>
       </form>
-      <TodoBoardGridContainer>
-        <div>
-        
-        </div>
-      </TodoBoardGridContainer>
+      <div>
+        <TodoBoard />
+      </div>
     </div>
   );
 }
