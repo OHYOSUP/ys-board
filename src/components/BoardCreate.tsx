@@ -12,7 +12,7 @@ const BoardCreateInput = styled.input`
 function BoardCreate() {
   const [boards, setBoards] = useRecoilState(boardState);
   const { register, resetField, handleSubmit } = useForm();
-  const navigage = useNavigate();
+  const navigate = useNavigate();
   const onValid = (data: any) => {
     setBoards((allBoard) => {
       const newBoard = {
@@ -23,7 +23,7 @@ function BoardCreate() {
       return [...allBoard, newBoard];
     });
     resetField("boardName");
-    navigage(`/${data.boardName}`);
+    navigate(`/${data.boardName}`);
   };
 
   return (

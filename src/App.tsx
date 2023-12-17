@@ -7,7 +7,7 @@ import Board from "./components/[board]";
 const Wrapper = styled.div`
   width: 100vw;
   background-color: #ccc;
-  display:flex;
+  display: flex;
 `;
 
 const Nav = styled.div`
@@ -15,7 +15,7 @@ const Nav = styled.div`
   height: 100vh;
   background-color: #fff;
 `;
-const MainWrapper = styled.div`  
+const MainWrapper = styled.div`
   width: 83vw;
 `;
 
@@ -26,7 +26,7 @@ function App() {
         <Boards />
       </Nav>
       <MainWrapper>
-      <Routes>
+        <Routes>
           <Route path="/:boardName" element={<Board />} />
         </Routes>
       </MainWrapper>

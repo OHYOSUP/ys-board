@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { boardState } from "../atom";
 import { useRecoilState } from "recoil";
-import styled from "styled-components";
 import TodoBoard from "./TodoBoard";
 
 function Board() {
@@ -13,7 +12,7 @@ function Board() {
 
   const onValid = (data: any) => {
     const newTodoBoard = {
-      id: Date.now().toString(),
+      id: Date.now()+"",
       todoBoardTitle: data.todoBoard,
       todos: [],
     };
@@ -24,8 +23,7 @@ function Board() {
           : board
       );
     });
-    resetField("todoBoard");
-    console.log(boards, data);
+    resetField("todoBoard");    
   };
 
   return (

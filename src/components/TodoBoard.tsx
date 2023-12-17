@@ -15,22 +15,28 @@ const TodoBoardGridContainer = styled.div`
   gap: 10px;
 `;
 function TodoBoard() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, resetField } = useForm();
   const { boardName } = useParams();
   const [boards, setBoards] = useRecoilState(boardState);
 
   const onValid = (data: any, todoBoardId: string) => {
-    console.log(data);
     const newTodo = {
-      id: Date.now().toString(),
-      todoText: data.todo,
+      id: Date.now() + "",
+      todoText: data[`todoItem-${todoBoardId}`],
     };
+    boards.map((board) =>
+      board.todoBoard.map((todoBoard) => {
+        console.log(todoBoard.id, todoBoardId);
+      })
+    );
+    console.log(data);
     setBoards((prevBoards) => {
       return prevBoards.map((board) =>
         board.boardName === boardName
           ? {
               ...board,
               todoBoard: board.todoBoard.map((todoBoard) =>
+                //! todoItem 생성 오류
                 todoBoard.id === todoBoardId
                   ? { ...todoBoard, todos: [...todoBoard.todos, newTodo] }
                   : todoBoard
@@ -40,7 +46,7 @@ function TodoBoard() {
       );
     });
 
-    console.log(boards);
+    resetField("todoItem");
   };
   return (
     <div>
@@ -54,9 +60,12 @@ function TodoBoard() {
                   onSubmit={handleSubmit((data) => onValid(data, todoBoard.id))}
                 >
                   <input
-                    {...register("todo")}
+                    {...register(`todoItem-${todoBoard.id}`, {
+                      required: true,
+                    })}
                     placeholder="할 일을 입력하세요"
                   />
+                  <button type="submit">Enter</button>
                 </form>
                 {todoBoard.todoBoardTitle}
                 <ul>
