@@ -27,8 +27,7 @@ function Board() {
   };
 
   return (
-    <div>
-      <h1>{boardName}</h1>
+    <div>      
       <form onSubmit={handleSubmit(onValid)}>
         <input {...register("todoBoard")} />
         <button type="submit">Enter</button>

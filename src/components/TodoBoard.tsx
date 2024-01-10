@@ -3,6 +3,7 @@ import { boardState } from "../atom";
 import { useRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+
 const TodoBoardWrapper = styled.div`
   margin: 20px;
   width: 300px;
@@ -12,31 +13,37 @@ const TodoBoardWrapper = styled.div`
 const TodoBoardGridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
 `;
 function TodoBoard() {
   const { register, handleSubmit, resetField } = useForm();
   const { boardName } = useParams();
   const [boards, setBoards] = useRecoilState(boardState);
 
+  // const [todoState, setTodoStates] = useState(
+  //   boards
+  //     .filter((v) => v.boardName === boardName)
+  //     .map((board) => board.todoBoard.map(() => ""))
+  // );
+
   const onValid = (data: any, todoBoardId: string) => {
     const newTodo = {
       id: Date.now() + "",
-      todoText: data[`todoItem-${todoBoardId}`],
+      todoText: data?.[`todoItem-${todoBoardId}`],
     };
-    boards.map((board) =>
-      board.todoBoard.map((todoBoard) => {
-        console.log(todoBoard.id, todoBoardId);
-      })
-    );
-    console.log(data);
+    console.log(boards, data?.[`todoItem-${todoBoardId}`]);
+
+    //! todoItem 생성 오류
+    // setTodoStates((prevState) => {
+    //   const newState = [...prevState];
+    //   newState[index] = [data[`todoItem-${todoBoardId}`]];
+    //   return newState;
+    // });
     setBoards((prevBoards) => {
       return prevBoards.map((board) =>
         board.boardName === boardName
           ? {
               ...board,
               todoBoard: board.todoBoard.map((todoBoard) =>
-                //! todoItem 생성 오류
                 todoBoard.id === todoBoardId
                   ? { ...todoBoard, todos: [...todoBoard.todos, newTodo] }
                   : todoBoard
@@ -46,7 +53,11 @@ function TodoBoard() {
       );
     });
 
-    resetField("todoItem");
+    // const newTodoStates = [...todoState];
+    // newTodoStates[todoBoardId] = "";
+    // setTodoStates(newTodoStates);
+
+    // resetField(`todoItem-${todoBoardId}`);
   };
   return (
     <div>
