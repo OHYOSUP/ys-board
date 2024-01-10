@@ -1,17 +1,17 @@
 import { atom } from "recoil";
 
-interface ITodos {
+export interface ITodos {
   id: string;
   todoText: string;
 }
 
-interface ITodoBoard {
+export interface ITodoBoard {
   id: string;
   todoBoardTitle: string;
   todos: ITodos[];
 }
 
-interface IBoardState {
+export interface IBoardState {
   id: string;
   boardName: string;
   todoBoard: ITodoBoard[];
