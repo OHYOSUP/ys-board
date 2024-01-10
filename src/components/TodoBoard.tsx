@@ -28,9 +28,9 @@ function TodoBoard() {
   const onValid = (data: any, todoBoardId: string) => {
     const newTodo = {
       id: Date.now() + "",
-      todoText: data?.[`todoItem-${todoBoardId}`],
+      todoText: data?.[`todo${todoBoardId}`],
     };
-    console.log(boards, data?.[`todoItem-${todoBoardId}`]);
+    
 
     //! todoItem 생성 오류
     // setTodoStates((prevState) => {
@@ -71,7 +71,7 @@ function TodoBoard() {
                   onSubmit={handleSubmit((data) => onValid(data, todoBoard.id))}
                 >
                   <input
-                    {...register(`todoItem-${todoBoard.id}`, {
+                    {...register(`todo${todoBoard.id}`, {
                       required: true,
                     })}
                     placeholder="할 일을 입력하세요"
