@@ -16,9 +16,7 @@ const TodoBoardGridContainer = styled.div`
 `;
 function TodoBoard() {
   const { boardName } = useParams();
-  const boards = useRecoilValue(boardState);
-
-  console.log(boards);
+  const boards = useRecoilValue(boardState);  
 
   return (
     <div>

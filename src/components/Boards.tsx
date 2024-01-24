@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useState } from "react";
 import BoardCreate from "./BoardCreate";
+import { OptionWrapper } from "./styles/OptionWrapper";
 
 const BoardListWrapper = styled.div`
   display: flex;
@@ -41,15 +42,6 @@ const Board = styled.li`
   list-style: none;
   color: black;
   padding: 10px;
-`;
-const OptionWrapper = styled.div`
-  width: 40px;
-  display: flex;
-  justify-content: space-around;
-  position: absolute;
-  right: 0;
-  opacity: 0;
-  cursor: pointer;
 `;
 
 const BoardCreateButtonWrapper = styled.div`

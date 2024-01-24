@@ -1,7 +1,20 @@
 import { useForm } from "react-hook-form";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { boardState } from "../atom";
+import { ITodos, boardState } from "../atom";
 import { useParams } from "react-router-dom";
+import Todos from "./Todos";
+import styled from "styled-components";
+
+const TodoList = styled.ul`
+  width: 100%;
+  height: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  align-item: center;
+  gap: 10px;  
+  padding: 0;
+`;
 
 function TodoBoardForm({ todoBoard }: any) {
   const { boardName } = useParams();
@@ -29,6 +42,7 @@ function TodoBoardForm({ todoBoard }: any) {
           : board
       );
     });
+    resetField(`todo${todoBoard.id}`);
   };
 
   return (
@@ -45,11 +59,11 @@ function TodoBoardForm({ todoBoard }: any) {
         />
         <button type="submit">Enter</button>
       </form>
-      <ul>
-        {todoBoard.todos.map((todo: any) => (
-          <li key={todo.id}>{todo.todoText}</li>
+      <TodoList>
+        {todoBoard.todos.map((todo: ITodos) => (
+          <Todos key={todo.id} id={todo.id} todoBoardId={todoBoard.id} todoText={todo.todoText} />
         ))}
-      </ul>
+      </TodoList>
     </>
   );
 }

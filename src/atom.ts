@@ -18,6 +18,6 @@ export interface IBoardState {
 }
 
 export const boardState = atom<IBoardState[]>({
-  key: "baord",
+  key: "board",
   default: [],
 });
