@@ -3,6 +3,14 @@ import { ITodos, boardState } from "../atom";
 import { OptionWrapper } from "./styles/OptionWrapper";
 import { useRecoilState } from "recoil";
 import { useParams } from "react-router";
+import { useState } from "react";
+import TodoEditForm from "./TodoEditForm";
+
+interface ItodoBoard {
+  id: string;
+  todoText: string;
+  todoBoardId: string;
+}
 
 const Todo = styled.li`
 position: relative;
@@ -17,10 +25,16 @@ padding: 10px;
 `;
 
 //! todoText에 string타입 지정이 안됨
-function Todos({ todoText, id, todoBoardId }: any) {
+function Todos({ todoText, id, todoBoardId }: ItodoBoard) {
   const { boardName } = useParams();
+  const [isEdit, setIsEdit] = useState(false);
 
   const [boards, setBoards] = useRecoilState(boardState);
+
+  const onEdit = () => {
+    setIsEdit((prev) => !prev);
+  };
+ 
 
   const onDelete = () => {
     setBoards((prevBoard) => {
@@ -32,7 +46,9 @@ function Todos({ todoText, id, todoBoardId }: any) {
                 todoBoard.id === todoBoardId
                   ? {
                       ...todoBoard,
-                      todos: [...todoBoard.todos.filter((todo) => todo.id !== id)],
+                      todos: [
+                        ...todoBoard.todos.filter((todo) => todo.id !== id),
+                      ],
                     }
                   : todoBoard
               ),
@@ -44,7 +60,13 @@ function Todos({ todoText, id, todoBoardId }: any) {
 
   return (
     <Todo>
-      <span>{todoText}</span>
+      <span>
+        {isEdit ? (
+          <TodoEditForm todoId={id} todoBoardId={todoBoardId} setIsEdit={setIsEdit}/>
+        ) : (
+          <span>{todoText}</span>
+        )}
+      </span>
       <OptionWrapper>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -53,6 +75,7 @@ function Todos({ todoText, id, todoBoardId }: any) {
           strokeWidth="1.5"
           stroke="currentColor"
           className="w-6 h-6"
+          onClick={onEdit}
         >
           <path
             strokeLinecap="round"

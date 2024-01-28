@@ -22,7 +22,7 @@ function TodoBoardForm({ todoBoard }: any) {
   const { register, handleSubmit, resetField } = useForm();
   const [boards, setBoards] = useRecoilState(boardState);
   const onValid = (data: any, todoBoardId: string) => {
-    console.log("onvalid", todoBoardId);
+    
     const newTodo = {
       id: Date.now() + "",
       todoText: data?.[`todo${todoBoardId}`],

@@ -17,6 +17,7 @@ export interface IBoardState {
   todoBoard: ITodoBoard[];
 }
 
+
 export const boardState = atom<IBoardState[]>({
   key: "board",
   default: [],
