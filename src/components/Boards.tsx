@@ -1,6 +1,6 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { boardState } from "../atom";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useState } from "react";
 import BoardCreate from "./BoardCreate";
@@ -50,10 +50,18 @@ const BoardCreateButtonWrapper = styled.div`
 `;
 
 function Boards() {
-  const boards = useRecoilValue(boardState);
+  const { boardName } = useParams();
+  const [boards, setBoards] = useRecoilState(boardState);
   const [boardCreateOpen, setBoardCreateOpen] = useState(false);
   const onBoardCreateClick = () => {
     setBoardCreateOpen((prev) => !prev);
+  };
+
+  const onBoardDelete = (deleteBoardName: string) => {
+    console.log("delete", boards, boardName);
+    setBoards((prevBoards) => {
+      return prevBoards.filter(board => board.boardName !== deleteBoardName)
+    });
   };
 
   return (
@@ -87,6 +95,7 @@ function Boards() {
                 strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-6 h-6"
+                onClick={()=>onBoardDelete(board.boardName)}
               >
                 <path
                   strokeLinecap="round"

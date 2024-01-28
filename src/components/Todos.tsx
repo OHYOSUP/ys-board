@@ -37,6 +37,7 @@ function Todos({ todoText, id, todoBoardId }: ItodoBoard) {
  
 
   const onDelete = () => {
+    console.log(typeof boardName)
     setBoards((prevBoard) => {
       return prevBoard.map((board) =>
         board.boardName === boardName
