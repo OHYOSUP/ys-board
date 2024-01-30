@@ -5,9 +5,10 @@ import { useRecoilState } from "recoil";
 import { useParams } from "react-router";
 import TodoBoard from "./TodoBoard";
 
-function TodoEditForm({ todoBoardId, todoId, setIsEdit }: any) {
+function TodoEditForm({ todoBoardId, todoId, onTodoEdit }: any) {
   const [boards, setBoards] = useRecoilState(boardState);
   const { register, handleSubmit } = useForm();
+  // const [toggleTodoEdit, setToggleTodoEdit] = useState(todoEdit)
   
   const { boardName } = useParams();
   
@@ -40,13 +41,12 @@ function TodoEditForm({ todoBoardId, todoId, setIsEdit }: any) {
       return updatedBoards
     });
     console.log(EditedTodo, boards);
-    setIsEdit(false)
-    
+    onTodoEdit()
   };
 
   return (
     <form onSubmit={handleSubmit(onValid)}>
-      <input {...register("EditedTodo")} type="text" />
+      <input {...register("EditedTodo")} />
     </form>
   );
 }

@@ -27,17 +27,15 @@ padding: 10px;
 //! todoText에 string타입 지정이 안됨
 function Todos({ todoText, id, todoBoardId }: ItodoBoard) {
   const { boardName } = useParams();
-  const [isEdit, setIsEdit] = useState(false);
+  const [todoEdit, setTodoEdit] = useState(false);
 
   const [boards, setBoards] = useRecoilState(boardState);
 
-  const onEdit = () => {
-    setIsEdit((prev) => !prev);
+  const onTodoEdit = () => {
+    setTodoEdit((prev) => !prev);
   };
- 
 
   const onDelete = () => {
-    console.log(typeof boardName)
     setBoards((prevBoard) => {
       return prevBoard.map((board) =>
         board.boardName === boardName
@@ -61,13 +59,16 @@ function Todos({ todoText, id, todoBoardId }: ItodoBoard) {
 
   return (
     <Todo>
-      <span>
-        {isEdit ? (
-          <TodoEditForm todoId={id} todoBoardId={todoBoardId} setIsEdit={setIsEdit}/>
-        ) : (
-          <span>{todoText}</span>
-        )}
-      </span>
+      {todoEdit ? (
+        <TodoEditForm
+          todoId={id}
+          todoBoardId={todoBoardId}
+          onTodoEdit={onTodoEdit}
+        />
+      ) : (
+        <span>{todoText}</span>
+      )}
+
       <OptionWrapper>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +77,7 @@ function Todos({ todoText, id, todoBoardId }: ItodoBoard) {
           strokeWidth="1.5"
           stroke="currentColor"
           className="w-6 h-6"
-          onClick={onEdit}
+          onClick={onTodoEdit}
         >
           <path
             strokeLinecap="round"

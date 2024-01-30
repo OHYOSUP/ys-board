@@ -1,10 +1,11 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { boardState } from "../atom";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useState } from "react";
 import BoardCreate from "./BoardCreate";
 import { OptionWrapper } from "./styles/OptionWrapper";
+import BoardEditForm from "./BoardEditForm";
 
 const BoardListWrapper = styled.div`
   display: flex;
@@ -38,19 +39,15 @@ const BoardContainer = styled.div`
   }
 `;
 
-const Board = styled.li`
-  list-style: none;
-  color: black;
-  padding: 10px;
-`;
-
 const BoardCreateButtonWrapper = styled.div`
   cursor: pointer;
   width: 50px;
 `;
 
+const Board = styled.p``;
+
 function Boards() {
-  const { boardName } = useParams();
+  const [editingBoardId, setEditingBoardId] = useState<string | null>(null);
   const [boards, setBoards] = useRecoilState(boardState);
   const [boardCreateOpen, setBoardCreateOpen] = useState(false);
   const onBoardCreateClick = () => {
@@ -58,20 +55,32 @@ function Boards() {
   };
 
   const onBoardDelete = (deleteBoardName: string) => {
-    console.log("delete", boards, boardName);
     setBoards((prevBoards) => {
-      return prevBoards.filter(board => board.boardName !== deleteBoardName)
+      return prevBoards.filter((board) => board.boardName !== deleteBoardName);
     });
+  };
+
+  const toggleBoardEdit = (boardId: string) => {
+    setEditingBoardId((prevId) => (prevId === boardId ? null : boardId));
   };
 
   return (
     <BoardListWrapper>
       {boardCreateOpen && <BoardCreate />}
       <BoardListContainer>
-        {boards.map((board, index) => (
-          <BoardContainer key={index}>
-            <Link key={index} to={`/${board.boardName}`}>
-              <Board>{board.boardName}</Board>
+        {boards.map((board) => (
+          <BoardContainer key={board.id}>
+            <Link to={`/${board.boardName}`}>
+              {editingBoardId === board.id ? (
+                <span>
+                  <BoardEditForm
+                    toggleBoardEdit={() => toggleBoardEdit(board.id)}
+                    boardName={board.boardName}
+                  />
+                </span>
+              ) : (
+                <span>{board.boardName}</span>
+              )}
             </Link>
             <OptionWrapper>
               <svg
@@ -81,6 +90,7 @@ function Boards() {
                 strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-6 h-6"
+                onClick={() => toggleBoardEdit(board.id)}
               >
                 <path
                   strokeLinecap="round"
@@ -95,7 +105,7 @@ function Boards() {
                 strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-6 h-6"
-                onClick={()=>onBoardDelete(board.boardName)}
+                onClick={() => onBoardDelete(board.boardName)}
               >
                 <path
                   strokeLinecap="round"
