@@ -3,9 +3,9 @@ import { boardState } from "../atom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useState } from "react";
-import BoardCreate from "./BoardCreate";
+import BoardCreate from "./CRUDforms/BoardCreate";
 import { OptionWrapper } from "./styles/OptionWrapper";
-import BoardEditForm from "./BoardEditForm";
+import BoardEditForm from "./CRUDforms/BoardEditForm";
 
 const BoardListWrapper = styled.div`
   display: flex;
@@ -44,7 +44,6 @@ const BoardCreateButtonWrapper = styled.div`
   width: 50px;
 `;
 
-const Board = styled.p``;
 
 function Boards() {
   const [editingBoardId, setEditingBoardId] = useState<string | null>(null);

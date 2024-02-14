@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
-import { boardState } from "../atom";
+import { boardState } from "../../atom";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { boardState } from "../atom";
+import { boardState } from "../../atom";
 import { useRecoilState } from "recoil";
 import { useParams } from "react-router";
-import TodoBoard from "./TodoBoard";
+import TodoBoard from "../TodoBoard";
 
 function TodoEditForm({ todoBoardId, todoId, onTodoEdit }: any) {
   const [boards, setBoards] = useRecoilState(boardState);

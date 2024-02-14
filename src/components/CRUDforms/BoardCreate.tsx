@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { useRecoilValue, useRecoilState } from "recoil";
-import { boardState } from "../atom";
+import { boardState } from "../../atom";
 import styled from "styled-components";
 
 const BoardCreateInput = styled.input`

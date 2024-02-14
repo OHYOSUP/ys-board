@@ -4,7 +4,7 @@ import { OptionWrapper } from "./styles/OptionWrapper";
 import { useRecoilState } from "recoil";
 import { useParams } from "react-router";
 import { useState } from "react";
-import TodoEditForm from "./TodoEditForm";
+import TodoEditForm from "./CRUDforms/TodoEditForm";
 
 interface ItodoBoard {
   id: string;

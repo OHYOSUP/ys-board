@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 
 export interface ITodos {
   id: string;
@@ -16,7 +16,6 @@ export interface IBoardState {
   boardName: string;
   todoBoard: ITodoBoard[];
 }
-
 
 export const boardState = atom<IBoardState[]>({
   key: "board",

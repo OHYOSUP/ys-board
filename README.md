@@ -1,9 +1,9 @@
-### 20231211
+### Todo
+- [ ] dran-n-drop
 - [ ] localstorage
-- [ ] board, todoBoard, todoList crud
-
-
+- [ ] 스타일링
+- [ ] 리펙토링
 
 
 ## Skills
-react, recoil, styled-components, react-hook-form
+react, recoil, styled-components, react-hook-form, beautiful-dnd
