@@ -1,7 +1,12 @@
-import { useForm } from "react-hook-form";
+import { FieldError, useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { boardState } from "../../atom";
 import { useParams } from "react-router";
+import styled from "styled-components";
+
+const ErrorMessage = styled.p`
+  color: #fff;
+`;
 
 function TodoCreateForm({ todoBoard }: any) {
   const {
@@ -10,7 +15,7 @@ function TodoCreateForm({ todoBoard }: any) {
     resetField,
     formState: { errors },
   } = useForm();
-  const { boardName } = useParams();  
+  const { boardName } = useParams();
   const [boards, setBoards] = useRecoilState(boardState);
 
   const onValid = (data: any, todoBoardId: string) => {
@@ -35,7 +40,7 @@ function TodoCreateForm({ todoBoard }: any) {
     });
     resetField(`todo${todoBoard.id}`);
   };
-  console.log(errors[`todo${todoBoard.id}`]?.message);
+  
   return (
     <>
       <form onSubmit={handleSubmit((data) => onValid(data, todoBoard.id))}>
@@ -47,7 +52,11 @@ function TodoCreateForm({ todoBoard }: any) {
         />
         <button type="submit">Enter</button>
       </form>
-      {errors[`todo${todoBoard.id}`]?.message}
+      {errors[`todo${todoBoard.id}`] && (
+        <ErrorMessage>
+          {(errors[`todo${todoBoard.id}`] as FieldError)?.message}
+        </ErrorMessage>
+      )}
     </>
   );
 }

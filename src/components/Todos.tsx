@@ -64,6 +64,7 @@ function Todos({ todoText, id, todoBoardId }: ItodoBoard) {
           todoId={id}
           todoBoardId={todoBoardId}
           onTodoEdit={onTodoEdit}
+          todoText={todoText}
         />
       ) : (
         <span>{todoText}</span>

@@ -1,22 +1,33 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { FieldError, useForm } from "react-hook-form";
 import { boardState } from "../../atom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useParams } from "react-router";
-import TodoBoard from "../TodoBoard";
 
-function TodoEditForm({ todoBoardId, todoId, onTodoEdit }: any) {
-  const [boards, setBoards] = useRecoilState(boardState);
-  const { register, handleSubmit } = useForm();
-  // const [toggleTodoEdit, setToggleTodoEdit] = useState(todoEdit)
-  
+function TodoEditForm({ todoBoardId, todoId, onTodoEdit, todoText }: any) {
   const { boardName } = useParams();
-  
+  const setBoards = useSetRecoilState(boardState);
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      EditedTodo: todoText,
+    },
+  });
+
+  // useEffect(() => {
+  //   setError("EditedTodo", {
+  //     type: "manual",
+  //     message: "한 글자 이상 입력하세요",
+  //   });
+  // }, [setError]);
 
   const onValid = ({ EditedTodo }: any) => {
-    
     setBoards((prevBoard) => {
-        const updatedBoards = prevBoard.map((board) =>
+      const updatedBoards = prevBoard.map((board) =>
         board.boardName === boardName
           ? {
               ...board,
@@ -38,16 +49,18 @@ function TodoEditForm({ todoBoardId, todoId, onTodoEdit }: any) {
             }
           : board
       );
-      return updatedBoards
+      return updatedBoards;
     });
-    console.log(EditedTodo, boards);
-    onTodoEdit()
+    onTodoEdit();
   };
 
   return (
-    <form onSubmit={handleSubmit(onValid)}>
-      <input {...register("EditedTodo")} />
-    </form>
+    <>
+      <form onSubmit={handleSubmit(onValid)}>
+        <input {...register("EditedTodo", { required: '한 글자 이상 입력하세요' })} />
+      </form>
+      {errors.EditedTodo ? <p>{(errors.EditedTodo as FieldError).message}</p> : null}
+    </>
   );
 }
 
